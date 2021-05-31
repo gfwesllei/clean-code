@@ -6,7 +6,8 @@ public class StudentHelper {
 	* You get a grade B if marks are between 51 and 80 (both inclusive). Except for Maths where the upper limit is increased by 10.
 	*/
 	public boolean isGradeB(int marks, boolean isMaths) {
-		return isMaths ? marks>=51 && marks<=90 : marks>=51 && marks<=80; 
+		int increaseLimite=isMaths?10:0;
+		return marks>=51 && marks<=80+increaseLimite;
 	}
 
 	/* PROBLEM 2 */
@@ -17,29 +18,20 @@ public class StudentHelper {
 	*/
 
 	public String getGrade(int mark, boolean isMaths) {
-		String grade = "C";
-		
-		if (isGradeA(mark, isMaths))
-			grade = "A";
-		else if (isBGrade(mark, isMaths)) {
-			grade = "B";
+
+		int extraLimit=isMaths?5:0;
+
+		if (mark >= 91+extraLimit)
+			return  "A";
+
+		if (mark >= 51+extraLimit) {
+			return  "B";
 		}
-		return grade;
+
+		return "C";
 	}
 
-	private boolean isGradeA(int mark, boolean isMaths) {
-		int lowerLimitForAGrade = isMaths ? 95
-				: 90;
-		return mark > lowerLimitForAGrade;
-	}
-
-	private boolean isBGrade(int mark, boolean isMaths) {
-		int lowerLimitGradeB = isMaths ? 55
-				: 50;
-		return mark > lowerLimitGradeB && mark < 90;
-	}
-
-    /*  PROBLEM 3
+	/*  PROBLEM 3
      * You and your Friend are planning to enter a Subject Quiz.
      * However, there is a marks requirement that you should attain to qualify.
      * 
@@ -56,11 +48,25 @@ public class StudentHelper {
     */
         
     public String willQualifyForQuiz(int marks1, int marks2, boolean isMaths) {
-        if ((isMaths ? marks1 <= 25 : marks1 <= 20)
-                || (isMaths ? marks2 <= 25 : marks2 <= 20)) return "NO";
-        if ((isMaths ? marks1 >= 85 : marks1 >= 80)
-                || (isMaths ? marks2 >= 85 : marks2 >= 80)) return "YES";
+
+    	if (isNotGood(marks1,isMaths) || isNotGood(marks2,isMaths))
+        	return "NO";
+
+        if (isGood(marks1, isMaths) || isGood(marks2, isMaths))
+        	return "YES";
+
         return "MAYBE";
-    }	
+    }
+
+	private boolean isGood(int marks, boolean isMaths) {
+    	int extraLimite = isMaths ?5:0;
+		return  marks >= 80+extraLimite;
+	}
+
+	public boolean isNotGood(int marks,boolean isMatch){
+    	int extraLimite = isMatch ?5:0;
+		return  marks<= 20+extraLimite;
+	}
+
 
 }

@@ -5,6 +5,7 @@ public class Game {
 	int rollIndex = 0;
 
 	public void roll(int pinsKnockedDown) {
+
 		rolls[rollIndex++] = pinsKnockedDown;
 	}
 
@@ -31,18 +32,22 @@ public class Game {
 	}
 
 	private int bonusForSpare(int rollsIndex) {
+
 		return rolls[rollsIndex + 2];
 	}
 
 	private int bonusForStrike(int rollsIndex) {
+
 		return rolls[rollsIndex + 1] + bonusForSpare(rollsIndex);
 	}
 
 	private boolean isStrike(int rollsIndex) {
+
 		return rolls[rollsIndex] == 10;
 	}
 
 	private boolean isSpare(int rollsIndex) {
+
 		return rolls[rollsIndex] + rolls[rollsIndex + 1] == 10;
 	}
 }

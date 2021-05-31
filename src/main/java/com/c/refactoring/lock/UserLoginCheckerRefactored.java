@@ -12,9 +12,9 @@ public class UserLoginCheckerRefactored {
 	 */
 	public Lock isUserAllowedToLogin(long id, String status, 
 			boolean isFirstScreen, User userTryingToLogin,
-			List existingLocks) {
+			List<Object> existingLocks) {
 
-		if (existingLocks.size() == 0 || existingLocks.get(0) == null) {
+		if (existingLocks.isEmpty()) {
 			return createWriteLock();
 		}
 
@@ -40,7 +40,7 @@ public class UserLoginCheckerRefactored {
 	}
 
 	private Lock createReadLockWithMessage(String userIdWithLock) {
-		String lockMsg = Constants.LOCK_TEXT.replaceAll("@@USER@@", userIdWithLock);
+		String lockMsg = Constants.LOCK_TEXT.replace("@@USER@@", userIdWithLock);
 		Lock lock = new Lock();
 		lock.setRead(true);
 		// Only read access is permitted to other user
